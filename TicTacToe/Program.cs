@@ -24,32 +24,110 @@ namespace TicTacToe
             bool inputCorrect = true;
 
 
+            
+
+
             //Run code as long as program runs
             do
             {
-                if(player == 2)
+
+                
+
+
+                if (player == 2) //this means player 1 will start
                 {
                     player = 1;
                     EnterXorO(player, input);
-
-                } else if (player == 1)
+                    
+                }
+                else if (player == 1)
                 {
                     player = 2;
                     EnterXorO(player, input);
                 }
 
+                SetFields();
 
-                //Get player input
+
+                #region
+                //Check winings
+
+                char[] playerChars = { 'X', '0' };
+
+                foreach (char playerChar in playerChars)
+                {
+                    if (
+                        ((playField[0, 0] == playerChar) && (playField[0, 1] == playerChar) && (playField[0, 2] == playerChar))
+                        || ((playField[1, 0] == playerChar) && (playField[1, 1] == playerChar) && (playField[1, 2] == playerChar))
+                        || ((playField[2, 0] == playerChar) && (playField[2, 1] == playerChar) && (playField[2, 2] == playerChar))
+                        || ((playField[0, 0] == playerChar) && (playField[1, 0] == playerChar) && (playField[2, 0] == playerChar))
+                        || ((playField[0, 1] == playerChar) && (playField[2, 1] == playerChar) && (playField[1, 0] == playerChar))
+                        || ((playField[0, 2] == playerChar) && (playField[1, 2] == playerChar) && (playField[2, 2] == playerChar))
+                        || ((playField[0, 0] == playerChar) && (playField[1, 1] == playerChar) && (playField[2, 2] == playerChar))
+                        || ((playField[0, 2] == playerChar) && (playField[1, 1] == playerChar) && (playField[2, 0] == playerChar))
+                        )
+
+                    {
+
+
+
+                        if (playerChar == 'X')
+                        {
+                            Console.WriteLine("Player 2 has won");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Player 1 has won");
+                        }
+
+                    } 
+                }
+                #endregion
+
+
+
+                #region
+                //Get player input and test if field is already taken
                 do
                 {
-                    Console.WriteLine(" Player {0} : Choose your feild? :  ", player);
-                    input = int.Parse(Console.ReadLine());
-                    
+                    Console.WriteLine(" Player {0} : Choose your field? :  ", player);
 
+                    try
+                    {
+                        input = int.Parse(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Please enter a valid number");
+                    }
+                    // i.e. if input is already taken 
+                    if ((input == 1) && (playField[0, 0] == '1')) //if input is already taken this becomes (the input code doesnt match this) and jumps to the else block
+                        inputCorrect = true;
+                    else if ((input == 2) && (playField[0, 1] == '2'))
+                        inputCorrect = true;
+                    else if ((input == 3) && (playField[0, 2] == '3'))
+                        inputCorrect = true;
+                    else if ((input == 4) && (playField[1, 0] == '4'))
+                        inputCorrect = true;
+                    else if ((input == 5) && (playField[1, 1] == '5'))
+                        inputCorrect = true;
+                    else if ((input == 6) && (playField[1, 2] == '6'))
+                        inputCorrect = true;
+                    else if ((input == 7) && (playField[2, 0] == '7'))
+                        inputCorrect = true;
+                    else if ((input == 8) && (playField[2, 1] == '8'))
+                        inputCorrect = true;
+                    else if ((input == 9 ) && (playField[2, 2] == '9'))
+                        inputCorrect = true;
+                    else
+                    {
+                        Console.WriteLine("\n Incorrect input. Please enter another number");
+                        inputCorrect = false;
+                    }
 
+                } while (!inputCorrect); //if input is false, run code again
 
-                } while (!inputCorrect);
-
+                #endregion
 
 
 
@@ -57,15 +135,14 @@ namespace TicTacToe
 
 
             
-
-           
         }
 
-
+        
 
              
         public static void SetFields()
         {
+            Console.Clear();
             Console.WriteLine("      |      |     ");
             Console.WriteLine("   {0}  |   {1}  |  {2} ", playField[0,0], playField[0, 1], playField[0, 2]);
             Console.WriteLine("______|______|_____");
@@ -89,9 +166,10 @@ namespace TicTacToe
             else if (player == 2)
                 playersign = 'O';
 
+
             switch (input)
             {
-                case 1: playField[0, 0] = playersign ; break;
+                case 1: playField[0, 0] = playersign ; break;  //playField[0,0] = 1
                 case 2: playField[0, 1] =  playersign; break;
                 case 3: playField[0, 2] =  playersign; break;
                 case 4: playField[1, 0] = playersign; break;

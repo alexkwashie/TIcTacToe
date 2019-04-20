@@ -15,6 +15,15 @@ namespace TicTacToe
         };
 
 
+        //Reset Fields after game is over
+        static char[,] playFieldInitial =
+        {
+             {'1','2','3'},
+             {'4','5','6'},
+             {'7','8','9'}
+        };
+
+
 
         static void Main(string[] args)
         {
@@ -52,7 +61,7 @@ namespace TicTacToe
                 #region
                 //Check winings
 
-                char[] playerChars = { 'X', '0' };
+                char[] playerChars = { 'X', 'O' };
 
                 foreach (char playerChar in playerChars)
                 {
@@ -61,25 +70,32 @@ namespace TicTacToe
                         || ((playField[1, 0] == playerChar) && (playField[1, 1] == playerChar) && (playField[1, 2] == playerChar))
                         || ((playField[2, 0] == playerChar) && (playField[2, 1] == playerChar) && (playField[2, 2] == playerChar))
                         || ((playField[0, 0] == playerChar) && (playField[1, 0] == playerChar) && (playField[2, 0] == playerChar))
-                        || ((playField[0, 1] == playerChar) && (playField[2, 1] == playerChar) && (playField[1, 0] == playerChar))
+                        || ((playField[0, 1] == playerChar) && (playField[1, 1] == playerChar) && (playField[2, 1] == playerChar))
                         || ((playField[0, 2] == playerChar) && (playField[1, 2] == playerChar) && (playField[2, 2] == playerChar))
                         || ((playField[0, 0] == playerChar) && (playField[1, 1] == playerChar) && (playField[2, 2] == playerChar))
                         || ((playField[0, 2] == playerChar) && (playField[1, 1] == playerChar) && (playField[2, 0] == playerChar))
                         )
 
-                    {
-
-
+                    { 
 
                         if (playerChar == 'X')
                         {
-                            Console.WriteLine("Player 2 has won");
+                            Console.WriteLine("\nPlayer 2 has won");
                         }
                         else
                         {
-                            Console.WriteLine("Player 1 has won");
+                            Console.WriteLine("\nPlayer 1 has won");
                         }
 
+
+                        Console.WriteLine("Please press any key to reset the game");
+                        Console.ReadKey();
+
+                        //Reset field afterplay has won
+                        ResetField();
+
+
+                        break;
                     } 
                 }
                 #endregion
@@ -138,6 +154,11 @@ namespace TicTacToe
         }
 
         
+        public static void ResetField()
+        {
+            playField = playFieldInitial; //set it to the playFieldInitial with the similar numbers
+            SetFields();  //Reset the new playField(here in this method to the SetFields() method code below)
+        }
 
              
         public static void SetFields()

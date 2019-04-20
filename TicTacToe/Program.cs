@@ -23,6 +23,8 @@ namespace TicTacToe
              {'7','8','9'}
         };
 
+        //Set Turns
+        static int turns = 0;
 
 
         static void Main(string[] args)
@@ -39,10 +41,6 @@ namespace TicTacToe
             //Run code as long as program runs
             do
             {
-
-                
-
-
                 if (player == 2) //this means player 1 will start
                 {
                     player = 1;
@@ -97,6 +95,15 @@ namespace TicTacToe
 
                         break;
                     } 
+
+                    else if(turns == 10)
+                    {
+                        Console.WriteLine("The Game is a Draw!");
+                        Console.WriteLine("Please press any key to reset the game");
+                        Console.ReadKey();
+                        ResetField();
+                        break;
+                    }
                 }
                 #endregion
 
@@ -158,6 +165,8 @@ namespace TicTacToe
         {
             playField = playFieldInitial; //set it to the playFieldInitial with the similar numbers
             SetFields();  //Reset the new playField(here in this method to the SetFields() method code below)
+
+            turns = 0;
         }
 
              
@@ -175,6 +184,7 @@ namespace TicTacToe
             Console.WriteLine("______|______|_____");
             Console.WriteLine("      |      |     ");
             Console.WriteLine("      |      |     ");
+            turns++; // Everytime a field is set, is adds 1 to the (turns) variable
         }
            
 
